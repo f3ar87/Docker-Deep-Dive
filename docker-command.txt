@@ -1,0 +1,46 @@
+************************************
+        GENERIC COMMANDS
+************************************
+
+
+--> info sul sistema
+docker system info
+
+
+************************************
+        WORKING WITH IMAGES
+************************************
+
+
+--> Richiamare un immagine dal repository (1. get manifest 2. pull layers)
+--> Per docker il registro di default è DockerHub
+docker image pull {[image-repo/]image-name[:version]}
+
+
+--> lista delle immagini nella macchine
+docker image ls [--digests (per vedere l'hash)]
+
+
+--> indica la storia di come è stata costruita l'immagine
+docker history {image-name}
+
+
+--> vedere la configurazione dell'immagine
+docker image inspect {image-name}
+
+
+--> cancellare l'immagine
+docker image rm {image-name}
+
+
+--> creare una nuova immagine 
+docker image build [-t {tag-name}] {context}
+--> esempio "docker image build -t psweb ."
+
+
+--> avviare immagine
+docker container run [-d //run in the background] [--name {name}] [-p {host-port:container-port}] {image-name}
+--> esempio "docker container run -d --name web1 -p 8080:8080 psweb"
+
+--> dettagli sul container
+docker image inspect {image-name}
