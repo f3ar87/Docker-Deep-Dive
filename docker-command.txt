@@ -2,6 +2,9 @@
         GENERIC COMMANDS
 ************************************
 
+--> versione di docker
+docker --version
+
 
 --> info sul sistema
 docker system info
@@ -38,9 +41,92 @@ docker image build [-t {tag-name}] {context}
 --> esempio "docker image build -t psweb ."
 
 
---> avviare immagine
-docker container run [-d //run in the background] [--name {name}] [-p {host-port:container-port}] {image-name}
+************************************
+        WORKING WITH CONTAINERS
+************************************
+
+--> avviare container per la prima volta
+docker container run 
+        [-d //run in the background] 
+        [-it //interactive terminal] 
+        [--name {name}] 
+        [-p {host-port:container-port}] 
+        {image-name} 
+        [{application-name //which application to run}]
+        [--mount source={volname},target={target}]
 --> esempio "docker container run -d --name web1 -p 8080:8080 psweb"
+
 
 --> dettagli sul container
 docker image inspect {image-name}
+
+
+--> lista dei container nel sistema
+docker container ls [-a //lista tutti i container]
+
+
+--> uscire dall'interactive mode del container 
+Ctrl + P + Q
+
+
+--> loggarsi nuovamente in un container
+docker container exec -it {container-name} {app-name}
+
+
+--> fermare un container
+docker container stop {container-name}|{container-id //anche solo parte dell'ID, purchè sia univocamente riconoscibile}
+
+
+--> far ripartire un container
+docker container start {container-name}|{container-id //anche solo parte dell'ID, purchè sia univocamente riconoscibile}
+
+
+--> rimuovere tutti i container
+docker container rm $(docker container ls -aq) -f
+
+
+************************************
+        NETWORKING
+************************************
+
+--> mostra le porte aperte nel container e come sono mappate sull'host
+docker port {container-name}
+
+--> recuperare l'IP del container
+docker inspect -f "{{ .NetworkSettings.Network.nat.IPAdress }}" {container-name}
+
+--> comando generale
+docker network
+
+
+************************************
+        SWARM
+************************************
+
+--> inizializzare il cluster Swarm
+docker swarm init
+
+
+--> lista dei nodi nel cluster
+docker node ls
+
+
+--> recuperare il token per aggiungere i nodi
+docker swarm join-token {manager|worker}
+
+
+--> aggiungere un nodo
+docker swarm join --token {token}
+
+
+--> creare container su swarm
+docker service
+
+
+************************************
+        VOLUME
+************************************
+
+
+--> comando principale per lavorare con i volume
+docker volume
